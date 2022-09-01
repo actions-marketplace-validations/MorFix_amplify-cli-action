@@ -1,14 +1,14 @@
 # amplify-cli-action
 
 [![RELEASE](https://img.shields.io/github/v/release/AresFitness/amplify-cli-action?include_prereleases)](https://github.com/AresFitness/amplify-cli-action/releases)
-[![View Action](https://img.shields.io/badge/view-action-blue.svg?logo=github&color=orange)](https://github.com/marketplace/actions/amplify-cli-action)
+[![View Action](https://img.shields.io/badge/view-action-blue.svg?logo=github&color=orange)](https://github.com/marketplace/actions/amplify-cli-action-sh)
 [![LICENSE](https://img.shields.io/github/license/AresFitness/amplify-cli-action)](https://github.com/AresFitness/amplify-cli-action/blob/master/LICENSE)
 [![ISSUES](https://img.shields.io/github/issues/AresFitness/amplify-cli-action)](https://github.com/AresFitness/amplify-cli-action/issues)
   
 🚀 :octocat: AWS Amplify CLI support for github actions. This action supports configuring and deploying your project to AWS as well as creating and undeploying amplify environments.
 
 ## Getting Started
-You can include the action in your workflow as `actions/amplify-cli-action@0.4.0`. Example (configuring amplify, building and deploying):
+You can include the action in your workflow as `actions/amplify-cli-action@0.4.1`. Example (configuring amplify, building and deploying):
 
 ```yaml
 name: 'Amplify Deploy'
@@ -32,7 +32,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: configure amplify
-      uses: AresFitness/amplify-cli-action@0.4.0
+      uses: AresFitness/amplify-cli-action@0.4.1
       with:
         amplify_command: configure
         amplify_env: prod
@@ -49,7 +49,7 @@ jobs:
         # npm run test
     
     - name: deploy
-      uses: AresFitness/amplify-cli-action@0.4.0
+      uses: AresFitness/amplify-cli-action@0.4.1
       with:
         amplify_command: publish
         amplify_env: prod
@@ -252,7 +252,7 @@ jobs:
         # also remove -_ from branch name and limit length to 10 for amplify env restriction
         echo "##[set-output name=amplifyenvname;]$(echo ${GITHUB_HEAD_REF//[-_]/} | cut -c-10)"
     - name: deploy test environment
-      uses: AresFitness/amplify-cli-action@0.4.0
+      uses: AresFitness/amplify-cli-action@0.4.1
       with:
         amplify_command: add_env
         amplify_env: ${{ steps.setenvname.outputs.amplifyenvname }}
@@ -270,7 +270,7 @@ jobs:
         # npm run test
     
     - name: undeploy test environment
-      uses: AresFitness/amplify-cli-action@0.4.0
+      uses: AresFitness/amplify-cli-action@0.4.1
       # run even if previous step fails
       if: failure() || success()
       with:

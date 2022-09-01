@@ -8,7 +8,7 @@
 🚀 :octocat: AWS Amplify CLI support for github actions. This action supports configuring and deploying your project to AWS as well as creating and undeploying amplify environments.
 
 ## Getting Started
-You can include the action in your workflow as `actions/amplify-cli-action@0.4.3`. Example (configuring amplify, building and deploying):
+You can include the action in your workflow as `actions/amplify-cli-action@0.4.4`. Example (configuring amplify, building and deploying):
 
 ```yaml
 name: 'Amplify Deploy'
@@ -32,7 +32,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: configure amplify
-      uses: AresFitness/amplify-cli-action@0.4.3
+      uses: AresFitness/amplify-cli-action@0.4.4
       with:
         amplify_command: configure
         amplify_env: prod
@@ -49,7 +49,7 @@ jobs:
         # npm run test
     
     - name: deploy
-      uses: AresFitness/amplify-cli-action@0.4.3
+      uses: AresFitness/amplify-cli-action@0.4.4
       with:
         amplify_command: publish
         amplify_env: prod
@@ -252,7 +252,7 @@ jobs:
         # also remove -_ from branch name and limit length to 10 for amplify env restriction
         echo "##[set-output name=amplifyenvname;]$(echo ${GITHUB_HEAD_REF//[-_]/} | cut -c-10)"
     - name: deploy test environment
-      uses: AresFitness/amplify-cli-action@0.4.3
+      uses: AresFitness/amplify-cli-action@0.4.4
       with:
         amplify_command: add_env
         amplify_env: ${{ steps.setenvname.outputs.amplifyenvname }}
@@ -270,7 +270,7 @@ jobs:
         # npm run test
     
     - name: undeploy test environment
-      uses: AresFitness/amplify-cli-action@0.4.3
+      uses: AresFitness/amplify-cli-action@0.4.4
       # run even if previous step fails
       if: failure() || success()
       with:

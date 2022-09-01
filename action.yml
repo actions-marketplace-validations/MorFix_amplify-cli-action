@@ -34,11 +34,16 @@ inputs:
     required: false
     default: ''
 runs:
+  using: "composite"
+  steps:
+    - run: $GITHUB_ACTION_PATH/script.sh
+      shell: bash    
+runs:
   using: 'composite'
   steps:
     - run: |
-         chmod +x entrypoint.sh
-         entrypoint.sh ${{ inputs.project_dir }} ${{ inputs.source_dir }} ${{ inputs.distribution_dir }} ${{ inputs.build_command }} ${{ inputs.amplify_command }} ${{ inputs.amplify_env }} ${{ inputs.delete_lock }} ${{ inputs.amplify_cli_version }} ${{ inputs.amplify_arguments }}
+         chmod +x $GITHUB_ACTION_PATH/entrypoint.sh
+         $GITHUB_ACTION_PATH/entrypoint.sh ${{ inputs.project_dir }} ${{ inputs.source_dir }} ${{ inputs.distribution_dir }} ${{ inputs.build_command }} ${{ inputs.amplify_command }} ${{ inputs.amplify_env }} ${{ inputs.delete_lock }} ${{ inputs.amplify_cli_version }} ${{ inputs.amplify_arguments }}
       shell: bash
 branding:
   icon: 'git-commit'

@@ -1,6 +1,6 @@
 # amplify-cli-action
 
-[![RELEASE](https://img.shields.io/github/v/release/ambientlight/amplify-cli-action?include_prereleases)](https://github.com/ambientlight/amplify-cli-action/releases)
+[![RELEASE](https://img.shields.io/github/v/release/AresFitness/amplify-cli-action?include_prereleases)](https://github.com/AresFitness/amplify-cli-action/releases)
 [![View Action](https://img.shields.io/badge/view-action-blue.svg?logo=github&color=orange)](https://github.com/marketplace/actions/amplify-cli-action)
 [![LICENSE](https://img.shields.io/github/license/AresFitness/amplify-cli-action)](https://github.com/AresFitness/amplify-cli-action/blob/master/LICENSE)
 [![ISSUES](https://img.shields.io/github/issues/AresFitness/amplify-cli-action)](https://github.com/AresFitness/amplify-cli-action/issues)
@@ -8,7 +8,7 @@
 🚀 :octocat: AWS Amplify CLI support for github actions. This action supports configuring and deploying your project to AWS as well as creating and undeploying amplify environments.
 
 ## Getting Started
-You can include the action in your workflow as `actions/amplify-cli-action@0.3.0`. Example (configuring amplify, building and deploying):
+You can include the action in your workflow as `actions/amplify-cli-action@0.4.0`. Example (configuring amplify, building and deploying):
 
 ```yaml
 name: 'Amplify Deploy'
@@ -32,7 +32,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: configure amplify
-      uses: ambientlight/amplify-cli-action@0.3.0
+      uses: AresFitness/amplify-cli-action@0.4.0
       with:
         amplify_command: configure
         amplify_env: prod
@@ -49,7 +49,7 @@ jobs:
         # npm run test
     
     - name: deploy
-      uses: AresFitness/amplify-cli-action@0.3.0
+      uses: AresFitness/amplify-cli-action@0.4.0
       with:
         amplify_command: publish
         amplify_env: prod
@@ -173,10 +173,9 @@ Shows the state of local resources not yet pushed to the cloud (Create/Update/De
 **required parameters**: `amplify_env`
 
 Creates and initialized a new amplify environment. You would likely need this if you want to create a full replica of production environment for running integration tests (Refer to [Replicating Environment for Integration Tests](#replicating-environment-for-integration-tests)). **IMPORTANT**: make sure to always run this step together with [delete_env](#delete_env) command since this new environment won't be added to your project's configuration and you would need to manually delete the leftover cloudformation stack and S3 bucket otherwise.
-
-**Note #0**: you need to specify custom `amplify_cli_version`: `3.17.1-alpha.35` that [fixes headless push](https://github.com/aws-amplify/amplify-cli/pull/2743) bug before `3.17.1` is released.  
-**Note #1**: **WILL FAIL** with `resource already exists` exception if you repeatedly populate the environment that you have undeployed previously **WHEN** you are using storage category in your project and its CF `AWS::S3::Bucket` resource has **Retain** `DeletionPolicy`, since `delete_env` step won't remove such S3 bucket.  
-**Note #2**: may take significant time if you are utilizing `AWS CloudFront` in your hosting category.
+  
+**Note #0**: **WILL FAIL** with `resource already exists` exception if you repeatedly populate the environment that you have undeployed previously **WHEN** you are using storage category in your project and its CF `AWS::S3::Bucket` resource has **Retain** `DeletionPolicy`, since `delete_env` step won't remove such S3 bucket.  
+**Note #1**: may take significant time if you are utilizing `AWS CloudFront` in your hosting category.
 
 #### delete_env
 **required parameters**: `amplify_env, delete_lock`
@@ -253,11 +252,11 @@ jobs:
         # also remove -_ from branch name and limit length to 10 for amplify env restriction
         echo "##[set-output name=amplifyenvname;]$(echo ${GITHUB_HEAD_REF//[-_]/} | cut -c-10)"
     - name: deploy test environment
-      uses: AresFitness/amplify-cli-action@0.3.0
+      uses: AresFitness/amplify-cli-action@0.4.0
       with:
         amplify_command: add_env
         amplify_env: ${{ steps.setenvname.outputs.amplifyenvname }}
-        amplify_cli_version: '3.17.1-alpha.35'
+        amplify_cli_version: '9.2.1'
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -271,13 +270,13 @@ jobs:
         # npm run test
     
     - name: undeploy test environment
-      uses: AresFitness/amplify-cli-action@0.3.0
+      uses: AresFitness/amplify-cli-action@0.4.0
       # run even if previous step fails
       if: failure() || success()
       with:
         amplify_command: delete_env
         amplify_env: ${{ steps.setenvname.outputs.amplifyenvname }}
-        amplify_cli_version: '3.17.1-alpha.35'
+        amplify_cli_version: '9.2.1'
         delete_lock: false
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

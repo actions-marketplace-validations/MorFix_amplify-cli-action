@@ -34,18 +34,10 @@ inputs:
     required: false
     default: ''
 runs:
-  using: 'docker'
-  image: 'docker://ghcr.io/ambientlight/amplify-cli-action/amplify-cli-action:0.3.0'
-  args:
-    - ${{ inputs.project_dir }}
-    - ${{ inputs.source_dir }}
-    - ${{ inputs.distribution_dir }}
-    - ${{ inputs.build_command }}
-    - ${{ inputs.amplify_command }}
-    - ${{ inputs.amplify_env }}
-    - ${{ inputs.delete_lock }}
-    - ${{ inputs.amplify_cli_version }}
-    - ${{ inputs.amplify_arguments }}
+  steps:
+    - run: |
+         chmod +x entrypoint.sh
+         entrypoint.sh ${{ inputs.project_dir }} ${{ inputs.source_dir }} ${{ inputs.distribution_dir }} ${{ inputs.build_command }} ${{ inputs.amplify_command }} ${{ inputs.amplify_env }} ${{ inputs.delete_lock }} ${{ inputs.amplify_cli_version }} ${{ inputs.amplify_arguments }}
 branding:
   icon: 'git-commit'
   color: 'orange'

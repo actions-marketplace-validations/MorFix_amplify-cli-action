@@ -34,6 +34,7 @@ inputs:
     required: false
     default: ''
 runs:
+  using: 'composite'
   steps:
     - run: |
          chmod +x entrypoint.sh

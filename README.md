@@ -2,10 +2,8 @@
 
 [![RELEASE](https://img.shields.io/github/v/release/ambientlight/amplify-cli-action?include_prereleases)](https://github.com/ambientlight/amplify-cli-action/releases)
 [![View Action](https://img.shields.io/badge/view-action-blue.svg?logo=github&color=orange)](https://github.com/marketplace/actions/amplify-cli-action)
-[![LICENSE](https://img.shields.io/github/license/ambientlight/amplify-cli-action)](https://github.com/ambientlight/amplify-cli-action/blob/master/LICENSE)
-[![ISSUES](https://img.shields.io/github/issues/ambientlight/amplify-cli-action)](https://github.com/ambientlight/amplify-cli-action/issues)
-
-No longer maintained. Feel free to send the PR to **README.md** and link folks to a maintained fork if such exist.  
+[![LICENSE](https://img.shields.io/github/license/AresFitness/amplify-cli-action)](https://github.com/AresFitness/amplify-cli-action/blob/master/LICENSE)
+[![ISSUES](https://img.shields.io/github/issues/AresFitness/amplify-cli-action)](https://github.com/AresFitness/amplify-cli-action/issues)
   
 🚀 :octocat: AWS Amplify CLI support for github actions. This action supports configuring and deploying your project to AWS as well as creating and undeploying amplify environments.
 
@@ -51,7 +49,7 @@ jobs:
         # npm run test
     
     - name: deploy
-      uses: ambientlight/amplify-cli-action@0.3.0
+      uses: AresFitness/amplify-cli-action@0.3.0
       with:
         amplify_command: publish
         amplify_env: prod
@@ -255,7 +253,7 @@ jobs:
         # also remove -_ from branch name and limit length to 10 for amplify env restriction
         echo "##[set-output name=amplifyenvname;]$(echo ${GITHUB_HEAD_REF//[-_]/} | cut -c-10)"
     - name: deploy test environment
-      uses: ambientlight/amplify-cli-action@0.3.0
+      uses: AresFitness/amplify-cli-action@0.3.0
       with:
         amplify_command: add_env
         amplify_env: ${{ steps.setenvname.outputs.amplifyenvname }}
@@ -273,7 +271,7 @@ jobs:
         # npm run test
     
     - name: undeploy test environment
-      uses: ambientlight/amplify-cli-action@0.3.0
+      uses: AresFitness/amplify-cli-action@0.3.0
       # run even if previous step fails
       if: failure() || success()
       with:
@@ -289,19 +287,3 @@ jobs:
 ```
 
 As an alternative, one practical way could be to have a fixed sandbox environment that all PRs will update regardless of the branch (and doesn't get undeployed), so it can be used as a playground to manually test and play around with upcoming updates, but kind in mind there can be potential additional costs involved as some AWS resources used in amplify have fixed by-hours costs (kinesis for example).
-
-
-## Development
-
-How to roll out a new image
-
-``` bash
-VERSION=0.3.0
-
-docker build -t amplify-cli-action:$VERSION .
-
-docker tag amplify-cli-action:$VERSION ghcr.io/ambientlight/amplify-cli-action/amplify-cli-action:$VERSION
-
-docker push ghcr.io/ambientlight/amplify-cli-action/amplify-cli-action:$VERSION
-
-```

@@ -1,4 +1,4 @@
-# amplify-cli-action [NO LONGER MAINTAINED]
+# amplify-cli-action
 
 [![RELEASE](https://img.shields.io/github/v/release/ambientlight/amplify-cli-action?include_prereleases)](https://github.com/ambientlight/amplify-cli-action/releases)
 [![View Action](https://img.shields.io/badge/view-action-blue.svg?logo=github&color=orange)](https://github.com/marketplace/actions/amplify-cli-action)
